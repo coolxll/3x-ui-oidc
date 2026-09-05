@@ -7,6 +7,7 @@ import (
 	"errors"
 	"fmt"
 	"net/http"
+	"os"
 	"strings"
 	"time"
 
@@ -46,11 +47,21 @@ func (a *OAuthController) getOAuthEnable(c *gin.Context) {
 }
 
 func (a *OAuthController) isOAuthConfigured() (bool, error) {
-	enable, err := a.settingService.GetOauthEnable()
+	// Check environment variables first
+	enable := os.Getenv("XUI_OAUTH_ENABLE")
+	if enable == "true" {
+		issuer := os.Getenv("XUI_OAUTH_ISSUER")
+		clientID := os.Getenv("XUI_OAUTH_CLIENT_ID")
+		clientSecret := os.Getenv("XUI_OAUTH_CLIENT_SECRET")
+		return issuer != "" && clientID != "" && clientSecret != "", nil
+	}
+
+	// Fall back to DB settings
+	enableDB, err := a.settingService.GetOauthEnable()
 	if err != nil {
 		return false, err
 	}
-	if !enable {
+	if !enableDB {
 		return false, nil
 	}
 	issuer, _ := a.settingService.GetOauthIssuer()
@@ -60,16 +71,33 @@ func (a *OAuthController) isOAuthConfigured() (bool, error) {
 }
 
 func (a *OAuthController) getOAuthConfig() (*oauth2.Config, *oidc.IDTokenVerifier, error) {
-	issuer, err := a.settingService.GetOauthIssuer()
-	if err != nil || issuer == "" {
+	// Try environment variables first
+	issuer := os.Getenv("XUI_OAUTH_ISSUER")
+	clientID := os.Getenv("XUI_OAUTH_CLIENT_ID")
+	clientSecret := os.Getenv("XUI_OAUTH_CLIENT_SECRET")
+	scopesStr := os.Getenv("XUI_OAUTH_SCOPES")
+
+	// Fall back to DB settings if env vars are empty
+	if issuer == "" {
+		issuer, _ = a.settingService.GetOauthIssuer()
+	}
+	if clientID == "" {
+		clientID, _ = a.settingService.GetOauthClientID()
+	}
+	if clientSecret == "" {
+		clientSecret, _ = a.settingService.GetOauthClientSecret()
+	}
+	if scopesStr == "" {
+		scopesStr, _ = a.settingService.GetOauthScopes()
+	}
+
+	if issuer == "" {
 		return nil, nil, errors.New("OAuth issuer not configured")
 	}
-	clientID, err := a.settingService.GetOauthClientID()
-	if err != nil || clientID == "" {
+	if clientID == "" {
 		return nil, nil, errors.New("OAuth client ID not configured")
 	}
-	clientSecret, err := a.settingService.GetOauthClientSecret()
-	if err != nil || clientSecret == "" {
+	if clientSecret == "" {
 		return nil, nil, errors.New("OAuth client secret not configured")
 	}
 
@@ -78,7 +106,6 @@ func (a *OAuthController) getOAuthConfig() (*oauth2.Config, *oidc.IDTokenVerifie
 		return nil, nil, fmt.Errorf("OIDC provider discovery failed: %w", err)
 	}
 
-	scopesStr, _ := a.settingService.GetOauthScopes()
 	scopes := []string{oidc.ScopeOpenID}
 	if scopesStr != "" {
 		for _, s := range strings.Split(scopesStr, ",") {
