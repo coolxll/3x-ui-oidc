@@ -131,6 +131,14 @@ type AllSetting struct {
 	LdapDefaultExpiryDays  int    `json:"ldapDefaultExpiryDays" form:"ldapDefaultExpiryDays" validate:"gte=0"`
 	LdapDefaultLimitIP     int    `json:"ldapDefaultLimitIP" form:"ldapDefaultLimitIP" validate:"gte=0"`
 
+	// OIDC / OAuth2 SSO
+	OauthEnable        bool   `json:"oauthEnable" form:"oauthEnable"`
+	OauthIssuer        string `json:"oauthIssuer" form:"oauthIssuer"`
+	OauthClientID      string `json:"oauthClientID" form:"oauthClientID"`
+	OauthClientSecret  string `json:"oauthClientSecret" form:"oauthClientSecret"`
+	OauthScopes        string `json:"oauthScopes" form:"oauthScopes"`
+	OauthUsernameClaim string `json:"oauthUsernameClaim" form:"oauthUsernameClaim"`
+
 	WarpUpdateInterval int `json:"warpUpdateInterval" form:"warpUpdateInterval" validate:"gte=0"`
 }
 
@@ -143,7 +151,8 @@ type AllSettingView struct {
 	HasApiToken       bool `json:"hasApiToken"`
 	HasWarpSecret     bool `json:"hasWarpSecret"`
 	HasNordSecret     bool `json:"hasNordSecret"`
-	HasSmtpPassword   bool `json:"hasSmtpPassword"`
+	HasSmtpPassword      bool `json:"hasSmtpPassword"`
+	HasOauthClientSecret bool `json:"hasOauthClientSecret"`
 }
 
 func pathHasForbiddenChar(s string) bool {

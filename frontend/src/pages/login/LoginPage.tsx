@@ -48,6 +48,7 @@ export default function LoginPage() {
   const [fetched, setFetched] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [twoFactorEnable, setTwoFactorEnable] = useState(false);
+  const [oauthEnable, setOauthEnable] = useState(false);
   const [headlineIndex, setHeadlineIndex] = useState(0);
   const methods = useForm<LoginForm>({
     defaultValues: { username: '', password: '', twoFactorCode: '' },
@@ -66,9 +67,13 @@ export default function LoginPage() {
   useEffect(() => {
     let cancelled = false;
     (async () => {
-      const msg = await HttpUtil.post('/getTwoFactorEnable');
+      const [twoFactorMsg, oauthMsg] = await Promise.all([
+        HttpUtil.post('/getTwoFactorEnable'),
+        HttpUtil.post('/getOAuthEnable'),
+      ]);
       if (cancelled) return;
-      if (msg.success) setTwoFactorEnable(!!msg.obj);
+      if (twoFactorMsg.success) setTwoFactorEnable(!!twoFactorMsg.obj);
+      if (oauthMsg.success) setOauthEnable(!!oauthMsg.obj);
       setFetched(true);
     })();
     return () => {
@@ -245,6 +250,21 @@ export default function LoginPage() {
                         {t('login')}
                       </Button>
                     </Form.Item>
+
+                    {oauthEnable && (
+                      <Form.Item>
+                        <Button
+                          size="large"
+                          block
+                          icon={<KeyOutlined />}
+                          onClick={() => {
+                            window.location.href = basePath + 'oauth/login';
+                          }}
+                        >
+                          {t('pages.login.ssoLogin', 'SSO Login')}
+                        </Button>
+                      </Form.Item>
+                    )}
                   </Form>
                 </FormProvider>
               </div>

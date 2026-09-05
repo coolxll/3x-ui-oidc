@@ -126,7 +126,8 @@
         "emptyPassword": "パスワードを入力してください",
         "wrongUsernameOrPassword": "ユーザー名、パスワード、または二段階認証コードが無効です。",
         "successLogin": "アカウントに正常にログインしました。"
-      }
+      },
+      "ssoLogin": "SSO 登录"
     },
     "index": {
       "cpu": "CPU",

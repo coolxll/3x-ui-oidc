@@ -126,7 +126,8 @@
         "emptyPassword": "请输入密码",
         "wrongUsernameOrPassword": "用户名、密码或双重验证码无效。",
         "successLogin": "您已成功登录您的账户。"
-      }
+      },
+      "ssoLogin": "SSO 登录"
     },
     "index": {
       "cpu": "CPU",

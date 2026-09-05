@@ -126,7 +126,8 @@
         "emptyPassword": "Kata Sandi diperlukan",
         "wrongUsernameOrPassword": "Username, kata sandi, atau kode dua faktor tidak valid.",
         "successLogin": "Anda telah berhasil masuk ke akun Anda."
-      }
+      },
+      "ssoLogin": "SSO 登录"
     },
     "index": {
       "cpu": "CPU",

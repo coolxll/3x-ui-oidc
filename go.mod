@@ -4,6 +4,7 @@ go 1.27.1
 
 require (
 	github.com/amnezia-vpn/amneziawg-go/v3 v3.1.20260828
+	github.com/coreos/go-oidc/v3 v3.21.0
 	github.com/gin-contrib/gzip v1.2.6
 	github.com/gin-contrib/sessions v1.1.0
 	github.com/gin-gonic/gin v1.12.0
@@ -29,6 +30,7 @@ require (
 	go.uber.org/atomic v1.11.0
 	golang.org/x/crypto v0.56.0
 	golang.org/x/net v0.58.0
+	golang.org/x/oauth2 v0.36.0
 	golang.org/x/sys v0.47.0
 	golang.org/x/text v0.41.0
 	google.golang.org/grpc v1.83.2
@@ -54,6 +56,7 @@ require (
 	github.com/gabriel-vasile/mimetype v1.4.15 // indirect
 	github.com/gin-contrib/sse v1.1.1 // indirect
 	github.com/go-asn1-ber/asn1-ber v1.5.8 // indirect
+	github.com/go-jose/go-jose/v4 v4.1.4 // indirect
 	github.com/go-ole/go-ole v1.3.0 // indirect
 	github.com/go-playground/locales v0.14.1 // indirect
 	github.com/go-playground/universal-translator v0.18.1 // indirect

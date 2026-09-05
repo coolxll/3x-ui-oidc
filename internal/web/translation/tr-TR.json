@@ -126,7 +126,8 @@
         "emptyPassword": "Şifre zorunludur",
         "wrongUsernameOrPassword": "Geçersiz kullanıcı adı, şifre veya iki adımlı doğrulama kodu.",
         "successLogin": "Hesabınıza başarıyla giriş yaptınız."
-      }
+      },
+      "ssoLogin": "SSO 登录"
     },
     "index": {
       "cpu": "CPU",

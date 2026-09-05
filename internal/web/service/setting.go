@@ -132,6 +132,14 @@ var defaultValueMap = map[string]string{
 	"panelOutbound":               "",
 	"devChannelEnable":            "false",
 
+	// OIDC / OAuth2 SSO defaults
+	"oauthEnable":        "false",
+	"oauthIssuer":        "",
+	"oauthClientID":      "",
+	"oauthClientSecret":  "",
+	"oauthScopes":        "email,profile",
+	"oauthUsernameClaim": "email",
+
 	// LDAP defaults
 	"ldapEnable":             "false",
 	"ldapHost":               "",
@@ -276,6 +284,7 @@ func (s *SettingService) GetAllSettingView() (*entity.AllSettingView, error) {
 	view.HasWarpSecret = secretConfigured(mustString(s.GetWarp()))
 	view.HasNordSecret = secretConfigured(mustString(s.GetNord()))
 	view.HasSmtpPassword = secretConfigured(allSetting.SmtpPassword)
+	view.HasOauthClientSecret = secretConfigured(allSetting.OauthClientSecret)
 	var apiTokenCount int64
 	if err := database.GetDB().Model(model.ApiToken{}).Where("enabled = ?", true).Count(&apiTokenCount).Error; err == nil {
 		view.HasApiToken = apiTokenCount > 0
@@ -284,6 +293,7 @@ func (s *SettingService) GetAllSettingView() (*entity.AllSettingView, error) {
 	view.TwoFactorToken = ""
 	view.LdapPassword = ""
 	view.SmtpPassword = ""
+	view.OauthClientSecret = ""
 	return view, nil
 }
 
@@ -1073,6 +1083,32 @@ func (s *SettingService) GetLdapDefaultLimitIP() (int, error) {
 	return s.getInt("ldapDefaultLimitIP")
 }
 
+// OIDC / OAuth2 settings
+
+func (s *SettingService) GetOauthEnable() (bool, error) {
+	return s.getBool("oauthEnable")
+}
+
+func (s *SettingService) GetOauthIssuer() (string, error) {
+	return s.getString("oauthIssuer")
+}
+
+func (s *SettingService) GetOauthClientID() (string, error) {
+	return s.getString("oauthClientID")
+}
+
+func (s *SettingService) GetOauthClientSecret() (string, error) {
+	return s.getString("oauthClientSecret")
+}
+
+func (s *SettingService) GetOauthScopes() (string, error) {
+	return s.getString("oauthScopes")
+}
+
+func (s *SettingService) GetOauthUsernameClaim() (string, error) {
+	return s.getString("oauthUsernameClaim")
+}
+
 // Event bus — per-subscriber event filtering
 
 func (s *SettingService) GetTgEnabledEvents() (string, error) {
@@ -1196,9 +1232,10 @@ func (s *SettingService) SetOutboundDownThreshold(value int) error {
 // flag, a blank submitted secret means "unchanged" (the field is always served
 // blank to the browser) and the stored value is preserved.
 type SecretClears struct {
-	TgBotToken   bool
-	LdapPassword bool
-	SmtpPassword bool
+	TgBotToken        bool
+	LdapPassword      bool
+	SmtpPassword      bool
+	OauthClientSecret bool
 }
 
 func (s *SettingService) UpdateAllSetting(allSetting *entity.AllSetting, clears SecretClears) error {
@@ -1321,6 +1358,13 @@ func (s *SettingService) preserveRedactedSecrets(allSetting *entity.AllSetting, 
 			return err
 		}
 		allSetting.SmtpPassword = value
+	}
+	if !clears.OauthClientSecret && strings.TrimSpace(allSetting.OauthClientSecret) == "" {
+		value, err := s.GetOauthClientSecret()
+		if err != nil {
+			return err
+		}
+		allSetting.OauthClientSecret = value
 	}
 	return nil
 }
@@ -1504,10 +1548,11 @@ func (s *SettingService) GetDefaultSettings(host string) (any, error) {
 }
 
 var factoryDefaultSecretKeys = map[string]bool{
-	"tgBotToken":     true,
-	"twoFactorToken": true,
-	"ldapPassword":   true,
-	"smtpPassword":   true,
+	"tgBotToken":        true,
+	"twoFactorToken":    true,
+	"ldapPassword":      true,
+	"smtpPassword":      true,
+	"oauthClientSecret": true,
 }
 
 /*

@@ -126,7 +126,8 @@
         "emptyPassword": "Por favor ingresa la contraseña.",
         "wrongUsernameOrPassword": "Nombre de usuario, contraseña o código de dos factores incorrecto.",
         "successLogin": "Has iniciado sesión en tu cuenta correctamente."
-      }
+      },
+      "ssoLogin": "SSO 登录"
     },
     "index": {
       "cpu": "CPU",

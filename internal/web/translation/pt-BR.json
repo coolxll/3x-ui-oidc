@@ -126,7 +126,8 @@
         "emptyPassword": "Senha é obrigatória",
         "wrongUsernameOrPassword": "Nome de usuário, senha ou código de dois fatores inválido.",
         "successLogin": "Você entrou na sua conta com sucesso."
-      }
+      },
+      "ssoLogin": "SSO 登录"
     },
     "index": {
       "cpu": "CPU",

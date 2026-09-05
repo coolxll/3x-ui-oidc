@@ -254,6 +254,9 @@ func (s *Server) initRouter() (*gin.Engine, error) {
 	s.panel = controller.NewXUIController(g)
 	s.api = controller.NewAPIController(g)
 
+	// OIDC / OAuth2 SSO controller
+	controller.NewOAuthController(g, s.settingService)
+
 	// Initialize WebSocket hub
 	s.wsHub = websocket.NewHub()
 	go s.wsHub.Run()
