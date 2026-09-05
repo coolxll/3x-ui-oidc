@@ -109,7 +109,10 @@ func (a *OAuthController) getOAuthConfig() (*oauth2.Config, *oidc.IDTokenVerifie
 	scopes := []string{oidc.ScopeOpenID}
 	if scopesStr != "" {
 		for _, s := range strings.Split(scopesStr, ",") {
-			scopes = append(scopes, strings.TrimSpace(s))
+			s = strings.TrimSpace(s)
+			if s != "" && s != oidc.ScopeOpenID {
+				scopes = append(scopes, s)
+			}
 		}
 	}
 
