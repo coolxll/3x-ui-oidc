@@ -257,6 +257,23 @@ func (s *Server) initRouter() (*gin.Engine, error) {
 	// OIDC / OAuth2 SSO controller
 	controller.NewOAuthController(g, s.settingService)
 
+	if basePath != "/" {
+		engine.GET("/oauth/callback", func(c *gin.Context) {
+			target := basePath + "oauth/callback"
+			if q := c.Request.URL.RawQuery; q != "" {
+				target += "?" + q
+			}
+			c.Redirect(http.StatusTemporaryRedirect, target)
+		})
+		engine.GET("/oauth/login", func(c *gin.Context) {
+			target := basePath + "oauth/login"
+			if q := c.Request.URL.RawQuery; q != "" {
+				target += "?" + q
+			}
+			c.Redirect(http.StatusTemporaryRedirect, target)
+		})
+	}
+
 	// Initialize WebSocket hub
 	s.wsHub = websocket.NewHub()
 	go s.wsHub.Run()
