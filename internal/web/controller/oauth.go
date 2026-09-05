@@ -290,14 +290,14 @@ func (a *OAuthController) findOrCreateOIDCUser(claims map[string]any, subject st
 }
 
 func buildRedirectURI(c *gin.Context, basePath string) string {
-	domain := ""
-	if svc, ok := c.Get("settingService"); ok {
-		if ss, ok2 := svc.(*service.SettingService); ok2 {
-			domain, _ = ss.GetWebDomain()
-		}
+	// Use explicit redirect URI from environment variable if set
+	if uri := os.Getenv("XUI_OAUTH_REDIRECT_URI"); uri != "" {
+		return uri
 	}
-	if domain == "" {
-		domain = c.Request.Host
+
+	domain := c.Request.Host
+	if host := c.GetHeader("X-Forwarded-Host"); host != "" {
+		domain = host
 	}
 	scheme := "https"
 	if c.Request.TLS == nil {
