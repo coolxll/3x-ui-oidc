@@ -145,12 +145,12 @@ type AllSetting struct {
 type AllSettingView struct {
 	AllSetting
 
-	HasTgBotToken     bool `json:"hasTgBotToken"`
-	HasTwoFactorToken bool `json:"hasTwoFactorToken"`
-	HasLdapPassword   bool `json:"hasLdapPassword"`
-	HasApiToken       bool `json:"hasApiToken"`
-	HasWarpSecret     bool `json:"hasWarpSecret"`
-	HasNordSecret     bool `json:"hasNordSecret"`
+	HasTgBotToken        bool `json:"hasTgBotToken"`
+	HasTwoFactorToken    bool `json:"hasTwoFactorToken"`
+	HasLdapPassword      bool `json:"hasLdapPassword"`
+	HasApiToken          bool `json:"hasApiToken"`
+	HasWarpSecret        bool `json:"hasWarpSecret"`
+	HasNordSecret        bool `json:"hasNordSecret"`
 	HasSmtpPassword      bool `json:"hasSmtpPassword"`
 	HasOauthClientSecret bool `json:"hasOauthClientSecret"`
 }

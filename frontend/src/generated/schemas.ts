@@ -86,6 +86,25 @@ export const SCHEMAS: Record<string, unknown> = {
       "ldapVlessField": {
         "type": "string"
       },
+      "oauthClientID": {
+        "type": "string"
+      },
+      "oauthClientSecret": {
+        "type": "string"
+      },
+      "oauthEnable": {
+        "description": "OIDC / OAuth2 SSO",
+        "type": "boolean"
+      },
+      "oauthIssuer": {
+        "type": "string"
+      },
+      "oauthScopes": {
+        "type": "string"
+      },
+      "oauthUsernameClaim": {
+        "type": "string"
+      },
       "outboundDownThreshold": {
         "maximum": 100,
         "minimum": 1,
@@ -376,6 +395,12 @@ export const SCHEMAS: Record<string, unknown> = {
       "ldapUserAttr",
       "ldapUserFilter",
       "ldapVlessField",
+      "oauthClientID",
+      "oauthClientSecret",
+      "oauthEnable",
+      "oauthIssuer",
+      "oauthScopes",
+      "oauthUsernameClaim",
       "outboundDownThreshold",
       "pageSize",
       "panelOutbound",
@@ -482,6 +507,9 @@ export const SCHEMAS: Record<string, unknown> = {
       "hasNordSecret": {
         "type": "boolean"
       },
+      "hasOauthClientSecret": {
+        "type": "boolean"
+      },
       "hasSmtpPassword": {
         "type": "boolean"
       },
@@ -563,6 +591,25 @@ export const SCHEMAS: Record<string, unknown> = {
         "type": "string"
       },
       "ldapVlessField": {
+        "type": "string"
+      },
+      "oauthClientID": {
+        "type": "string"
+      },
+      "oauthClientSecret": {
+        "type": "string"
+      },
+      "oauthEnable": {
+        "description": "OIDC / OAuth2 SSO",
+        "type": "boolean"
+      },
+      "oauthIssuer": {
+        "type": "string"
+      },
+      "oauthScopes": {
+        "type": "string"
+      },
+      "oauthUsernameClaim": {
         "type": "string"
       },
       "outboundDownThreshold": {
@@ -836,6 +883,7 @@ export const SCHEMAS: Record<string, unknown> = {
       "hasApiToken",
       "hasLdapPassword",
       "hasNordSecret",
+      "hasOauthClientSecret",
       "hasSmtpPassword",
       "hasTgBotToken",
       "hasTwoFactorToken",
@@ -862,6 +910,12 @@ export const SCHEMAS: Record<string, unknown> = {
       "ldapUserAttr",
       "ldapUserFilter",
       "ldapVlessField",
+      "oauthClientID",
+      "oauthClientSecret",
+      "oauthEnable",
+      "oauthIssuer",
+      "oauthScopes",
+      "oauthUsernameClaim",
       "outboundDownThreshold",
       "pageSize",
       "panelOutbound",

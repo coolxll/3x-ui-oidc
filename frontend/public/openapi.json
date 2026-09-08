@@ -112,6 +112,25 @@
           "ldapVlessField": {
             "type": "string"
           },
+          "oauthClientID": {
+            "type": "string"
+          },
+          "oauthClientSecret": {
+            "type": "string"
+          },
+          "oauthEnable": {
+            "description": "OIDC / OAuth2 SSO",
+            "type": "boolean"
+          },
+          "oauthIssuer": {
+            "type": "string"
+          },
+          "oauthScopes": {
+            "type": "string"
+          },
+          "oauthUsernameClaim": {
+            "type": "string"
+          },
           "outboundDownThreshold": {
             "maximum": 100,
             "minimum": 1,
@@ -402,6 +421,12 @@
           "ldapUserAttr",
           "ldapUserFilter",
           "ldapVlessField",
+          "oauthClientID",
+          "oauthClientSecret",
+          "oauthEnable",
+          "oauthIssuer",
+          "oauthScopes",
+          "oauthUsernameClaim",
           "outboundDownThreshold",
           "pageSize",
           "panelOutbound",
@@ -508,6 +533,9 @@
           "hasNordSecret": {
             "type": "boolean"
           },
+          "hasOauthClientSecret": {
+            "type": "boolean"
+          },
           "hasSmtpPassword": {
             "type": "boolean"
           },
@@ -589,6 +617,25 @@
             "type": "string"
           },
           "ldapVlessField": {
+            "type": "string"
+          },
+          "oauthClientID": {
+            "type": "string"
+          },
+          "oauthClientSecret": {
+            "type": "string"
+          },
+          "oauthEnable": {
+            "description": "OIDC / OAuth2 SSO",
+            "type": "boolean"
+          },
+          "oauthIssuer": {
+            "type": "string"
+          },
+          "oauthScopes": {
+            "type": "string"
+          },
+          "oauthUsernameClaim": {
             "type": "string"
           },
           "outboundDownThreshold": {
@@ -862,6 +909,7 @@
           "hasApiToken",
           "hasLdapPassword",
           "hasNordSecret",
+          "hasOauthClientSecret",
           "hasSmtpPassword",
           "hasTgBotToken",
           "hasTwoFactorToken",
@@ -888,6 +936,12 @@
           "ldapUserAttr",
           "ldapUserFilter",
           "ldapVlessField",
+          "oauthClientID",
+          "oauthClientSecret",
+          "oauthEnable",
+          "oauthIssuer",
+          "oauthScopes",
+          "oauthUsernameClaim",
           "outboundDownThreshold",
           "pageSize",
           "panelOutbound",

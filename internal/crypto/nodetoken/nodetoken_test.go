@@ -95,8 +95,15 @@ func TestPlaintextPassThrough(t *testing.T) {
 func TestEncryptedNeverFallsBackToPlaintext(t *testing.T) {
 	c, _ := NewCodec(ModeRequired, testRing(t, "k1", "k1"))
 	enc, _ := c.Encrypt(1, "tok")
-	// Corrupt the ciphertext body — must error, never return raw bytes.
-	bad := enc[:len(enc)-2] + "AA"
+	// Corrupt a base64 char in the middle of the payload — must error, never return raw bytes.
+	// (Flipping the last chars is unreliable: RawURL base64 of 31 bytes has 4 padding bits
+	// in the final char, so "AA" may decode to identical bytes.)
+	idx := len(enc) - 10
+	flip := byte('A')
+	if enc[idx] == 'A' {
+		flip = 'B'
+	}
+	bad := enc[:idx] + string(flip) + enc[idx+1:]
 	if _, err := c.Decrypt(1, bad); err == nil {
 		t.Fatal("corrupted ciphertext must fail, not fall back to plaintext")
 	}

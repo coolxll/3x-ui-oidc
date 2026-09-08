@@ -35,6 +35,12 @@ export interface AllSetting {
   ldapUserAttr: string;
   ldapUserFilter: string;
   ldapVlessField: string;
+  oauthClientID: string;
+  oauthClientSecret: string;
+  oauthEnable: boolean;
+  oauthIssuer: string;
+  oauthScopes: string;
+  oauthUsernameClaim: string;
   outboundDownThreshold: number;
   pageSize: number;
   panelOutbound: string;
@@ -124,6 +130,7 @@ export interface AllSettingView {
   hasApiToken: boolean;
   hasLdapPassword: boolean;
   hasNordSecret: boolean;
+  hasOauthClientSecret: boolean;
   hasSmtpPassword: boolean;
   hasTgBotToken: boolean;
   hasTwoFactorToken: boolean;
@@ -150,6 +157,12 @@ export interface AllSettingView {
   ldapUserAttr: string;
   ldapUserFilter: string;
   ldapVlessField: string;
+  oauthClientID: string;
+  oauthClientSecret: string;
+  oauthEnable: boolean;
+  oauthIssuer: string;
+  oauthScopes: string;
+  oauthUsernameClaim: string;
   outboundDownThreshold: number;
   pageSize: number;
   panelOutbound: string;
